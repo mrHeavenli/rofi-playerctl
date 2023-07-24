@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-status="$(playerctl status -f "{{playerName}}"): $(playerctl metadata -f "{{title}} by {{artist}}")"
+status_function () {
+	if playerctl status > /dev/null; then
+			echo "$(playerctl status -f "{{playerName}}"): $(playerctl metadata -f "{{trunc(title, 25)}} by {{trunc(artist, 25)}}") ($(playerctl status))"
+	else
+		echo "Nothing is playing"
+	fi
+}
+status=$(status_function)
 
 # Options
 toggle="⏯️ Play/Pause"
@@ -13,7 +20,7 @@ switch="🔄 Change selected player"
 # Variable passed to rofi
 options="$toggle\n$next\n$prev\n$seekplus\n$seekminus\n$switch"
 
-chosen="$(echo -e "$options" | rofi -show -p "$status" -dmenu -selected-row 0)"
+chosen="$(echo -e "$options" | rofi -show -p "${status^}" -dmenu -selected-row 0)"
 case $chosen in
     $toggle)
 		playerctl play-pause
