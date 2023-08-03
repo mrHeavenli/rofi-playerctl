@@ -2,7 +2,7 @@
 
 status_function () {
 	if playerctl status > /dev/null; then
-			echo "$(playerctl status -f "{{playerName}}"): $(playerctl metadata -f "{{trunc(title, 25)}} by {{trunc(artist, 25)}}") ($(playerctl status))"
+			echo "$(playerctl status -f "{{playerName}}"): $(playerctl metadata -f "{{trunc(default(title, \"[Unknown]\"), 25)}} by {{trunc(default(artist, \"[Unknown]\"), 25)}}") ($(playerctl status))"
 	else
 		echo "Nothing is playing"
 	fi
