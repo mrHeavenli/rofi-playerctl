@@ -4,3 +4,9 @@ A script to control media players with rofi.
 ## Requirements
 playerctl
 rofi
+
+## Installation
+I made an AUR package for it(yes, totally necessary for a 40 line shell script)
+```
+yay -S rofi-playerctl-git
+``` 
